@@ -27,13 +27,29 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
+        //utk nampilin smua
         //dd($request->all());
 
+        //validasi
+        $request->validate([
+		    'nama'  => 'required|max:10',
+		    'email' => ['required','email'],
+		    'pertanyaan' => 'required|max:300|min:8',
+		],[
+            'nama.required'=>'nama tidak boleh kosong',
+            'email.email'=>'Email tidak valid',
+            'pertanyaan.required'=>'pertanyaan tidak berbobot'
+        ]);
+
+
+        //utk simpan
         $data['nama'] = $request->nama;
         $data['email'] = $request->email;
         $data['pertanyaan'] = $request->pertanyaan;
 
         return view('home-question-respon', $data);
+
+
     }
 
     /**
