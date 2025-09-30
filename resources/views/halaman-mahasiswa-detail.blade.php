@@ -9,5 +9,10 @@
 <body>
     <h1>Selamat datang!</h1>
     <h2>Ini halaman detail mahasiswa</h2>
+    <form action="auth/login" method="POST">
+    <input type="text" name="username">
+    <input type="password" name="password">
+    <button type="submit">Submit</button>
+</form>
 </body>
 </html>
