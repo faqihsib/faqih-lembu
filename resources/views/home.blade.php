@@ -8,6 +8,7 @@
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/css/custom-style.css') }}">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -81,9 +82,10 @@
     </nav>
 
     <!-- Hero Section -->
+    <img src="{{ asset('assets/images/image.png') }}" alt="Logo">
     <section class="hero-section">
         <div class="container">
-            <h1 class="display-6 mb-2">Welcome Aboard!</h1>
+            <h1 class="display-6 mb-2 font-custom">Welcome Aboard!</h1>
             <p class="lead mb-0">A simple and elegant app using Bootstrap 5 and Laravel Blade.</p>
         </div>
     </section>
@@ -157,19 +159,30 @@
                     </div>
                 </div>
             </div>
-            <div class="card">
+
+
+            <div class="col-md-6">
+                <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Form Pertanyaan</h5>
 
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $errors)
+                    {{-- notif eror --}}
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $errors)
                                     <li>{{ $errors }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                            @endif
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    {{-- notif pertanyaan --}}
+                    @if (session('info'))
+                        <div class="alert alert-info">
+                            {!! session('info') !!}
+                        </div>
+                    @endif
 
                     <form action="{{ route('question.store') }}" method="POST">
                         @csrf
@@ -189,8 +202,6 @@
                     </form>
                 </div>
             </div>
-
-            <div class="col-md-6">
                 {{-- Alerts --}}
                 <div class="card ">
                     <div class="card-body">
