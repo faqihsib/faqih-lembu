@@ -70,7 +70,7 @@
                                                     </svg>
                                                     Edit
                                                 </a>
-                                                <form action=""
+                                                <form action="{{ route('user.destroy', $item->id) }}"
                                                     method="POST" style="display:inline">
                                                     @csrf
                                                     @method('DELETE')
