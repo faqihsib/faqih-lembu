@@ -16,7 +16,7 @@ class CreatePelangganDummy extends Seeder
     $faker = \Faker\Factory::create();
 
     foreach (range(1, 100) as $index) {
-        DB::table('pelanggan')->insert([  //-> versi raw (spesifik tabel)
+        DB::table('pelanggan')->insert([  // -> versi raw (spesifik tabel)
             'first_name' => $faker->firstName,
             'last_name'  => $faker->lastName,
             'birthday'   => $faker->date('Y-m-d', '2005-12-31'),
