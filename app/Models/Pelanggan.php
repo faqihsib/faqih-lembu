@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Pelanggan extends Model
@@ -18,6 +19,11 @@ class Pelanggan extends Model
         'phone',
 
     ];
+    public function images()
+    {
+        return $this->hasMany(Multipleuploads::class, 'pelanggan_id', 'pelanggan_id');
+    }
+    
     public function scopeFilter(Builder $query, $request, array $filterableColumns): Builder
     {
         foreach ($filterableColumns as $column) {
@@ -37,4 +43,5 @@ class Pelanggan extends Model
         });
     }
 }
+
 }

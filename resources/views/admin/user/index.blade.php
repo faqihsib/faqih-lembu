@@ -1,7 +1,6 @@
 @extends('layouts.admin.app')
 
 @section('content')
-    <!-- Start Main Content-->
     <div class="py-4">
         <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
             <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
@@ -45,19 +44,42 @@
                         <table id="table-pelanggan" class="table table-centered table-nowrap mb-0 rounded">
                             <thead class="thead-light">
                                 <tr>
+                                    {{-- Kolom Header --}}
+                                    <th class="border-0">Foto</th>
                                     <th class="border-0">Nama Lengkap</th>
                                     <th class="border-0">Email</th>
                                     <th class="border-0">Password</th>
                                     <th class="border-0 rounded-end">Action</th>
                                 </tr>
                             </thead>
-                            {{-- Codingan yang ditambahkan --}}
                             <tbody>
                                 @foreach ($dataUser as $item)
                                     <tr>
+                                        {{-- 1. Menampilkan Foto (Perbaikan disini) --}}
+                                        <td>
+                                            @if ($item->profile_picture)
+                                                <img src="{{ Storage::url($item->profile_picture) }}" alt="Foto Profil"
+                                                    class="rounded-circle"
+                                                    style="width: 50px; height: 50px; object-fit: cover;">
+                                            @else
+                                                <span class="badge bg-secondary">No Image</span>
+                                            @endif
+                                        </td>
+
+                                        {{-- 2. Menampilkan Nama (Sebelumnya tertukar posisinya dengan foto) --}}
                                         <td>{{ $item->name }}</td>
+
+                                        {{-- 3. Menampilkan Email --}}
                                         <td>{{ $item->email }}</td>
-                                        <td>{{ $item->password }}</td>
+
+                                        {{-- 4. Menampilkan Password (Hashed) --}}
+                                        <td>
+                                            <span class="text-truncate d-inline-block" style="max-width: 100px;">
+                                                {{ $item->password }}
+                                            </span>
+                                        </td>
+
+                                        {{-- 5. Tombol Action --}}
                                         <td>
                                             <a href="{{ route('user.edit', $item->id) }}" class="btn btn-info btn-sm">
                                                 <svg class="icon icon-xs me-2" data-slot="icon" fill="none"
@@ -73,7 +95,8 @@
                                                 style="display:inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
                                                     <svg class="icon icon-xs me-2" data-slot="icon" fill="none"
                                                         stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24"
                                                         xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -90,9 +113,12 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="mt-3">
+                        {{ $dataUser->links('pagination::bootstrap-5') }}
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
-    <!-- End Main Content-->
 @endsection

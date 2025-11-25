@@ -41,10 +41,18 @@
             <div class="col-12 mb-4">
                 <div class="card border-0 shadow components-section">
                     <div class="card-body">
-                        <form action="{{ route('user.store') }}" method="POST">
+                        {{-- PERUBAHAN 1: Tambahkan enctype="multipart/form-data" --}}
+                        <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row mb-4">
                                 <div class="col-lg-4 col-sm-6">
+
+                                    {{-- PERUBAHAN 2: Tambahkan Input Profile Picture --}}
+                                    <div class="mb-3">
+                                        <label for="profile_picture" class="form-label">Profile Picture</label>
+                                        <input type="file" class="form-control" id="profile_picture" name="profile_picture">
+                                    </div>
+
                                     <!-- Name -->
                                     <div class="mb-3">
                                         <label for="name" class="form-label">Name</label>
@@ -70,8 +78,10 @@
                                             name ="password_confirmation" value="{{ old('password_confirmation') }}">
                                     </div>
                                 </div>
+
+                                <div class="col-lg-4 col-sm-12">
                                     <!-- Buttons -->
-                                    <div class="">
+                                    <div class="mt-4"> {{-- Tambahkan margin top agar sejajar tombolnya --}}
                                         <button type="submit" class="btn btn-primary">Simpan</button>
                                         <a href="{{ route('user.index') }}"
                                             class="btn btn-outline-secondary ms-2">Batal</a>
