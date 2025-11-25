@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pelanggan;
 use Illuminate\Http\Request;
+use App\Models\PelangganFile;
 
 class PelangganController extends Controller
 {
@@ -63,8 +64,8 @@ class PelangganController extends Controller
      */
     public function edit(string $id)
     {
-        $data['dataPelanggan'] = Pelanggan::findOrFail($id);
-        return view('admin.pelanggan.edit', $data);
+        $data['dataPelanggan'] = Pelanggan::with('files')->findOrFail($id);
+    return view('admin.pelanggan.edit', $data);
     }
 
     /**
@@ -83,6 +84,23 @@ class PelangganController extends Controller
         $dataPelanggan->phone = $request->phone;
 
         $dataPelanggan->save();
+        if ($request->hasFile('files')) {
+        foreach ($request->file('files') as $file) {
+            if ($file->isValid()) {
+                // Buat nama file unik
+                $filename = round(microtime(true) * 1000) . '-' . str_replace(' ', '-', $file->getClientOriginalName());
+
+                // Simpan file ke folder public/uploads/pelanggan
+                $file->move(public_path('uploads/pelanggan'), $filename);
+
+                // Simpan data ke database pelanggan_files
+                PelangganFile::create([
+                    'pelanggan_id' => $pelanggan_id,
+                    'filename' => $filename
+                ]);
+            }
+        }
+    }
         return redirect()->route('pelanggan.index')->with('success','Data Berhasil Diupdate!');
     }
 

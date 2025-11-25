@@ -23,7 +23,7 @@ class Pelanggan extends Model
     {
         return $this->hasMany(Multipleuploads::class, 'pelanggan_id', 'pelanggan_id');
     }
-    
+
     public function scopeFilter(Builder $query, $request, array $filterableColumns): Builder
     {
         foreach ($filterableColumns as $column) {
@@ -43,5 +43,9 @@ class Pelanggan extends Model
         });
     }
 }
+    public function files()
+    {
+        return $this->hasMany(PelangganFile::class, 'pelanggan_id', 'pelanggan_id');
+    }
 
 }
