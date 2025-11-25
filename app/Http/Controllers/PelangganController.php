@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pelanggan;
 use Illuminate\Http\Request;
 use App\Models\PelangganFile;
+use App\Models\Multiupload;
 
 class PelangganController extends Controller
 {
@@ -56,7 +57,15 @@ class PelangganController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data['pelanggan'] = Pelanggan::findOrFail($id);
+
+        // Ambil file pendukung milik pelanggan ini
+        // Logikanya: Cari di tabel multiuploads dimana ref_table = 'pelanggan' DAN ref_id = id pelanggan
+        $data['files'] = Multiupload::where('ref_table', 'pelanggan')
+                                ->where('ref_id', $id)
+                                ->get();
+
+        return view('admin.pelanggan.detail', $data);
     }
 
     /**

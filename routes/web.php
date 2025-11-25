@@ -9,6 +9,7 @@ use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MultiuploadController;
 
 
 Route::get('/', function () {
@@ -54,3 +55,10 @@ Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard')
 Route::resource('pelanggan', PelangganController::class);
 
 Route::resource('user', UserController::class );
+
+Route::resource('pelanggan', PelangganController::class);
+
+// Tambahan Route Khusus File Upload (Generic)
+Route::post('/files/store', [MultiuploadController::class, 'store'])->name('files.store');
+Route::delete('/files/{id}', [MultiuploadController::class, 'destroy'])->name('files.destroy');
+
