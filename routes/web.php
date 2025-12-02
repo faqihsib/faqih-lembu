@@ -11,7 +11,7 @@ use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\MatakuliahController;
 use App\Http\Controllers\MultiuploadController;
-
+use GuzzleHttp\Middleware;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,36 +26,38 @@ Route::get('/mahasiswa', function () {
 })->name('mahasiswa.show');   //-> named route
 
 Route::get('/nama/{param1}', function ($param1) {  //route parameter harus berisi
-    return 'Nama saya: '.$param1;
+    return 'Nama saya: ' . $param1;
 });
 
 Route::get('/nim/{param1?}', function ($param1 = '') {  //route parameter default (bisa kosong)
-    return 'saya: '.$param1;
+    return 'saya: ' . $param1;
 });
 
-Route::get('/mahasiswa/{param1}', [MahasiswaController::class,'show']);  //route ke mahasiswa controller
+Route::get('/mahasiswa/{param1}', [MahasiswaController::class, 'show']);  //route ke mahasiswa controller
 
 Route::get('/about', function () {
     return view('home');
 });
 
-Route::get('/matakuliah/{param1}/{param2?}', [MatakuliahController::class,'index']);
+Route::get('/matakuliah/{param1}/{param2?}', [MatakuliahController::class, 'index']);
 
-Route::get('/home', [HomeController::class,'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
 Route::get('/pegawai', [PegawaiController::class, 'index']);
 
 Route::post('question/store', [QuestionController::class, 'store'])
-	->name('question.store');
+    ->name('question.store');
 
-Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard');
+Route::get('dashboard', [DashboardController::class, 'index'])
+    ->name('dashboard')
+    ->middleware('checkislogin');
 
 
 //route pelanggan
 Route::resource('pelanggan', PelangganController::class);
 
-Route::resource('user', UserController::class );
+Route::resource('user', UserController::class);
 
 Route::resource('pelanggan', PelangganController::class);
 
@@ -65,5 +67,13 @@ Route::delete('/files/{id}', [MultiuploadController::class, 'destroy'])->name('f
 
 
 //Route::resource('auth', AuthController::class);
-Route::post('/auth', [AuthController::class, 'login'])->name('login.store');
+Route::post('auth/login', [AuthController::class, 'login'])->name('login.store');
 Route::get('/auth', [AuthController::class, 'index'])->name('login');
+
+Route::get('auth/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::group(['Middleware'=> ['checkrole:Super Admin']], function () {
+    Route::get('user', [UserController::class, 'index'])->name('user.index');
+});
+
+

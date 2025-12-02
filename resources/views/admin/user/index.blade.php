@@ -48,6 +48,7 @@
                                     <th class="border-0">Foto</th>
                                     <th class="border-0">Nama Lengkap</th>
                                     <th class="border-0">Email</th>
+                                    <th class="border-0">Role</th>
                                     <th class="border-0">Password</th>
                                     <th class="border-0 rounded-end">Action</th>
                                 </tr>
@@ -65,21 +66,14 @@
                                                 <span class="badge bg-secondary">No Image</span>
                                             @endif
                                         </td>
-
-                                        {{-- 2. Menampilkan Nama (Sebelumnya tertukar posisinya dengan foto) --}}
                                         <td>{{ $item->name }}</td>
-
-                                        {{-- 3. Menampilkan Email --}}
                                         <td>{{ $item->email }}</td>
-
-                                        {{-- 4. Menampilkan Password (Hashed) --}}
+                                        <td>{{ $item->role }}</td>
                                         <td>
                                             <span class="text-truncate d-inline-block" style="max-width: 100px;">
                                                 {{ $item->password }}
                                             </span>
                                         </td>
-
-                                        {{-- 5. Tombol Action --}}
                                         <td>
                                             <a href="{{ route('user.edit', $item->id) }}" class="btn btn-info btn-sm">
                                                 <svg class="icon icon-xs me-2" data-slot="icon" fill="none"

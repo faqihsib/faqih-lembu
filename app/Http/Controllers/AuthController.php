@@ -14,6 +14,9 @@ class AuthController extends Controller
      */
     public function index()
     {
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        }
         return view('admin.auth.login');
     }
 
@@ -31,6 +34,9 @@ class AuthController extends Controller
         if ($user && Hash::check($request->password, $user->password)) {
             Auth::login($user);
 
+            session(['last_login' => now()]);
+
+
             return redirect()->route('dashboard')->with('success', 'Login berhasil!');
         } else {
             return back()->withErrors(['email' => 'Email atau password salah'])->withInput();
@@ -43,6 +49,7 @@ class AuthController extends Controller
         $request->session()->regenerateToken(); // Cegah CSRF
 
         // Redirect ke halaman login
+        return redirect()->route("login");
     }
 
     public function create()

@@ -84,6 +84,15 @@
                                     <input type="password" id="password" class="form-control" required
                                         name ="password_confirmation" value="{{ $dataUser->password_confirmation }}">
                                 </div>
+                                <div class="mb-3">
+                                        <label for="role" class="form-label">Pilih Role</label>
+                                        <select id="role" name="role" class="form-select" name ="role"
+                                            value="{{ old('role') }}">
+                                            <option value="Super Admin">Super Admin</option>
+                                            <option value="Pelanggan">Pelanggan</option>
+                                            <option value="Mitra">Mitra</option>
+                                        </select>
+                                    </div>
                             <div class="col-lg-4 col-sm-12">
                                 <!-- Buttons -->
                                 <div class="">
