@@ -289,7 +289,7 @@
 											</div>
 											<div class="col-auto ms--2">
 												<h4 class="h6 mb-0">
-													<a href="#">Bonnie Green</a>
+													<a href="#">Faqih Hidayah</a>
 												</h4>
 												<div class="d-flex align-items-center">
 													<div class="bg-danger dot rounded-circle me-1"></div>

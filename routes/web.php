@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\MahasiswaController;
-use App\Http\Controllers\MatakuliahController;
-use App\Http\Controllers\PegawaiController;
-use App\Http\Controllers\PelangganController;
-use App\Http\Controllers\QuestionController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\MatakuliahController;
 use App\Http\Controllers\MultiuploadController;
 
 
@@ -62,3 +63,7 @@ Route::resource('pelanggan', PelangganController::class);
 Route::post('/files/store', [MultiuploadController::class, 'store'])->name('files.store');
 Route::delete('/files/{id}', [MultiuploadController::class, 'destroy'])->name('files.destroy');
 
+
+//Route::resource('auth', AuthController::class);
+Route::post('/auth', [AuthController::class, 'login'])->name('login.store');
+Route::get('/auth', [AuthController::class, 'index'])->name('login');
